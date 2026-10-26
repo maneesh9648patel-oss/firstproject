@@ -1,0 +1,49 @@
+
+
+#navbar{
+     background-color:rgb(5, 4, 0);
+    width: 1000px;
+    height: 60px;
+    margin-right: 50px;
+    
+}
+#logo{
+    color: goldenrod;
+    text-size-adjust: 25px;
+   font-size: larger;
+   margin-leftt: 20px;
+   margin-right: 50px;
+}
+#a{
+    color: rgb(225, 219, 205);
+    text-size-adjust: 25px;
+    font-size: larger;
+     margin-right: 50px;
+}
+
+#b{
+    color: rgb(223, 219, 211);
+  font-size: larger;  
+   text-size-adjust: 25px;
+    margin-right: 50px;
+}
+#c{
+    color: rgb(233, 229, 218);
+  text-size-adjust: 25px;  
+  font-size: larger;
+   margin-right: 50px;
+}
+
+#d{
+    color: rgb(221, 217, 208);
+  text-size-adjust: 25px;  
+  font-size: larger; 
+    margin-right: 50px;
+}
+
+#e{
+    color: rgb(226, 219, 203);
+   font-size: larger;
+   text-size-adjust: 25px;
+    margin-right: 50px;
+}

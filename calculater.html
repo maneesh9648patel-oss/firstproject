@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+            width: 280px;
+        }
+
+        #display {
+            width: 100%;
+            height: 55px;
+            box-sizing: border-box;
+            font-size: 28px;
+            text-align: right;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            height: 55px;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #444;
+            color: white;
+        }
+
+        button:hover {
+            background: #666;
+        }
+
+        .operator {
+            background: #ff9500;
+        }
+
+        .clear {
+            background: #e53935;
+        }
+
+        .equal {
+            background: #2196f3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+        <input type="text" id="display" value="0" readonly>
+
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="addOperator('%')">%</button>
+            <button class="operator" onclick="addOperator('/')">÷</button>
+
+            <button onclick="addNumber('7')">7</button>
+            <button onclick="addNumber('8')">8</button>
+            <button onclick="addNumber('9')">9</button>
+            <button class="operator" onclick="addOperator('*')">×</button>
+
+            <button onclick="addNumber('4')">4</button>
+            <button onclick="addNumber('5')">5</button>
+            <button onclick="addNumber('6')">6</button>
+            <button class="operator" onclick="addOperator('-')">−</button>
+
+            <button onclick="addNumber('1')">1</button>
+            <button onclick="addNumber('2')">2</button>
+            <button onclick="addNumber('3')">3</button>
+            <button class="operator" onclick="addOperator('+')">+</button>
+
+            <button onclick="addNumber('0')">0</button>
+            <button onclick="addNumber('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById("display");
+        let expression = "";
+        let finished = false;
+
+        function addNumber(number) {
+            if (finished || expression === "Error") {
+                expression = "";
+                finished = false;
+            }
+
+            if (number === ".") {
+                const currentNumber = expression.split(/[+\-*/%]/).pop();
+                if (currentNumber.includes(".")) return;
+                if (currentNumber === "") number = "0.";
+            }
+
+            expression += number;
+            display.value = expression;
+        }
+
+        function addOperator(operator) {
+            if (!expression || expression === "Error") return;
+
+            if (/[+\-*/%]$/.test(expression)) {
+                expression = expression.slice(0, -1);
+            }
+
+            expression += operator;
+            finished = false;
+            display.value = expression;
+        }
+
+        function clearDisplay() {
+            expression = "";
+            display.value = "0";
+            finished = false;
+        }
+
+        function deleteLast() {
+            expression = expression === "Error"
+                ? ""
+                : expression.slice(0, -1);
+
+            display.value = expression || "0";
+            finished = false;
+        }
+
+        function calculate() {
+            if (!expression || expression === "Error") return;
+
+            try {
+                if (!/^[0-9+\-*/%.() ]+$/.test(expression)) {
+                    throw new Error("Invalid");
+                }
+
+                if (/[+\-*/%.]$/.test(expression)) {
+                    throw new Error("Invalid");
+                }
+
+                const result = Function(
+                    '"use strict"; return (' + expression + ')'
+                )();
+
+                if (!Number.isFinite(result)) {
+                    throw new Error("Invalid");
+                }
+
+                expression = String(
+                    Number(result.toPrecision(12))
+                );
+
+                display.value = expression;
+                finished = true;
+            } catch {
+                display.value = "Error";
+                expression = "Error";
+                finished = true;
+            }
+        }
+    </script>
+
+</body>
+</html>

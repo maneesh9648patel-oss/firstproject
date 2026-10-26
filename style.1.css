@@ -1,0 +1,15 @@
+*{
+    color: brown;
+   
+}
+h2{
+    text-align: center;
+}
+h3{
+    text-align: right;
+}
+p{
+    text-decoration:underline;
+    
+    text-transform: lowercase;
+}

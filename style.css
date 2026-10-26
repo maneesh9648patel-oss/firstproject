@@ -1,0 +1,14 @@
+body{
+    background-color: aqua;
+}
+p{
+    background-color: rgb(105, 20, 0);
+    color: rgb(ff0000);
+}
+button{
+    background-color: blueviolet;
+    color: brown;
+}
+*{
+    color: brown;
+}
